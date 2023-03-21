@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lets_party_frontend/app/signup/signup_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:lets_party_frontend/app/login/login_bloc.dart';
 import 'package:lets_party_frontend/assets/app_styles.dart';
@@ -34,7 +35,7 @@ class LoginScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (BuildContext context) => LoginScreen(),
+                      builder: (BuildContext context) => SignUpScreen(),
                     ),
                   );
                 },

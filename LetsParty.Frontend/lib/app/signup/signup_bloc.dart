@@ -5,7 +5,7 @@ class SignUpBloc extends ChangeNotifier {
   bool visiblePassword = false;
 
   Future<String?> createAccount(BuildContext context) async {
-    String? message = "";
+    String? message = null;
     return message;
   }
 

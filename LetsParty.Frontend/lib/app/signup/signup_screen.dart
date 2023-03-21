@@ -123,18 +123,22 @@ class SignUpScreen extends StatelessWidget {
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
                   final String? message = await bloc.createAccount(context);
-                  message != null
-                      ? ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(message),
-                    ),
-                  )
-                      : Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const MyHomePage(),
-                    ),
-                  );
+                  if (message != null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(message),
+                      ),
+                    );
+                  } else {
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const MyHomePage(),
+                      ),
+                    );
+                  }
                 }
               },
               style: ButtonStyle(
@@ -159,7 +163,7 @@ class SignUpScreen extends StatelessWidget {
             ),
           ),
           floatingActionButtonLocation:
-          FloatingActionButtonLocation.centerDocked,
+              FloatingActionButtonLocation.centerDocked,
         ),
       ),
     );

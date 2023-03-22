@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lets_party_frontend/app/home/home_screen.dart';
+import 'package:lets_party_frontend/app/login/login_screen.dart';
 import 'package:lets_party_frontend/assets/app_colors.dart';
 
 class MyApp extends StatelessWidget {
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: appThemeData,
-      home: const MyHomePage(),
+      home: LoginScreen(),
     );
   }
 }

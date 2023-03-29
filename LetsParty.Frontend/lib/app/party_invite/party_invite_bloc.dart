@@ -1,0 +1,21 @@
+import 'package:flutter/material.dart';
+import 'package:lets_party_frontend/core/models/party_model.dart';
+import 'package:lets_party_frontend/core/repository/party_data.dart';
+
+class PartyInviteBloc extends ChangeNotifier {
+  PartyInviteBloc(String partyID) {
+    loadParty(partyID);
+  }
+
+  final PartyData _partyData = PartyData();
+  PartyModel? party;
+  String? hostName;
+  bool loadingDone = false;
+
+  Future<void> loadParty(String partyID) async {
+    party = await _partyData.getParty(partyID);
+    hostName = party!.hostEmail;
+    loadingDone = true;
+    notifyListeners();
+  }
+}

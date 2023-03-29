@@ -20,4 +20,9 @@ class PartyModel {
   String where;
   String id;
   List<String> tags;
+
+  @override
+  String toString() {
+    return 'PartyModel{description: $description, name: $name, pictureLink: $pictureLink, hostEmail: $hostEmail, rsvp: $rsvp, when: $when, where: $where, id: $id, tags: $tags}';
+  }
 }

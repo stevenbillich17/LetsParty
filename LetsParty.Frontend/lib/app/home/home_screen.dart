@@ -7,6 +7,7 @@ import 'package:lets_party_frontend/assets/app_dimens.dart';
 import 'package:lets_party_frontend/gen/fonts.gen.dart';
 import 'package:lets_party_frontend/core/models/party_model.dart';
 import 'package:lets_party_frontend/app/home/home_screen_bloc.dart';
+import 'package:lets_party_frontend/app/party_invite/party_invite_screen.dart';
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});
@@ -44,7 +45,8 @@ class MyHomePage extends StatelessWidget {
                   const HomeMenu(),
                   Consumer<HomeScreenBloc>(
                     builder: (context, homeScreenBloc, child) {
-                      if (homeScreenBloc.goingParties.isEmpty && homeScreenBloc.hostedParties.isEmpty) {
+                      if (homeScreenBloc.goingParties.isEmpty &&
+                          homeScreenBloc.hostedParties.isEmpty) {
                         return const Center(
                           child: Padding(
                             padding: EdgeInsets.all(AppDimens.padding_2x),
@@ -81,7 +83,12 @@ class MyHomePage extends StatelessWidget {
                                   return PartyButton(
                                     image: party.pictureLink,
                                     name: party.name,
-                                    onPressed: () {},
+                                    onPressed: () => Navigator.push (
+                                      context,
+                                      MaterialPageRoute (
+                                        builder: (BuildContext context) => PartyInviteScreen(party.id),
+                                      ),
+                                    ),
                                   );
                                 },
                               ),

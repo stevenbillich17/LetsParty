@@ -32,11 +32,8 @@ class PartyButton extends StatelessWidget {
                       child: Image.network(
                         image,
                         fit: BoxFit.cover,
-                        errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
-                          return Container(
-                            color: Colors.grey[200],
-                          );
-                        },
+                        width: 200,
+                        height: 130,
                       ),
                     ),
                   ],

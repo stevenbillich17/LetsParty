@@ -1,10 +1,10 @@
-package com.hashbear.LetsParty.API;
+package com.hashbear.backend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ApplicationTests {
+class BackendApplicationTests {
 
 	@Test
 	void contextLoads() {

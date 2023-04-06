@@ -59,12 +59,42 @@ public class TestController {
         String name = "Party" + random.nextInt(100);
         String details = "Details for " + name;
         Person owner = randomPerson();
+        byte[] partyImage = null;
         List<Person> invitedPeople = new ArrayList<>(); // You can add invited people to the party if needed
         return Party.builder()
                 .name(name)
                 .owner(owner)
                 .details(details)
                 .invitedPeople(invitedPeople)
+                .partyImage(partyImage)
                 .build();
+    }
+
+    @RequestMapping("/health")
+    public String healthCheck() {
+        // check if backend is alive
+        boolean isBackendAlive = true;
+        if(isBackendAlive) {
+            return "Backend is alive";
+        } else {
+            return "Backend is dead";
+        }
+    }
+
+    @RequestMapping("/databaseHealthCheck")
+    public String databaseHealthCheck() {
+        // check if db works and is reachable
+        boolean isDbAlive = true;
+        if(isDbAlive) {
+            return "The Db is alive";
+        } else {
+            return "The Db is not responding";
+        }
+    }
+
+    @RequestMapping("/one-person-debug")
+    public Person getOnePerson() {
+        // returns a dummy person
+        return randomPerson();
     }
 }

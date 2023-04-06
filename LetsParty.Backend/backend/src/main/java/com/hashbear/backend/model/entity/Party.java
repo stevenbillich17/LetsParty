@@ -31,4 +31,7 @@ public class Party {
     @ManyToMany
     private List<Person> invitedPeople;
 
+    @Lob
+    private byte[] partyImage;
+
 }

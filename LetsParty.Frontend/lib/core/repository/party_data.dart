@@ -16,7 +16,7 @@ class PartyData {
       ),
       PartyModel(
         description: 'Party 2 description',
-        name: 'Party 2 name',
+        name: 'Party 2 wow',
         pictureLink:
             'http://i.pinimg.com/564x/d5/e2/5c/d5e25c356923ae51e5eef2e682e3860f.jpg',
         hostEmail: 'diana@mail.com',

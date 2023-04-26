@@ -7,7 +7,6 @@ import 'package:lets_party_frontend/assets/app_dimens.dart';
 import 'package:lets_party_frontend/assets/app_styles.dart';
 import 'package:lets_party_frontend/app/components/party_description.dart';
 
-
 class PartyInviteScreen extends StatelessWidget {
   PartyInviteScreen(this.partyID, {super.key});
 
@@ -48,14 +47,54 @@ class PartyInviteScreen extends StatelessWidget {
                       const SizedBox(
                         height: AppDimens.padding_4x,
                       ),
-                      // const Text(
-                      //   'who else is coming?',
-                      //   style: AppStyles.categoryStyle,
-                      // ),
-                      const SizedBox(
-                        height: AppDimens.padding_2x,
+                      Visibility(
+                        visible: bloc.partyGuests.isNotEmpty,
+                        child: Column(
+                          children: [
+                            const Text(
+                              'people invited',
+                              style: AppStyles.categoryStyle,
+                            ),
+                            const SizedBox(
+                              height: AppDimens.padding_2x,
+                            ),
+                            // PartyInfo(bloc.partyGuests),
+                            SizedBox(
+                              height: 120.0,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: bloc.partyGuests.length,
+                                itemBuilder: (context, count) {
+                                  return SizedBox(
+                                    width: 100.0,
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          width: 70,
+                                          height: 70,
+                                          decoration: const BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Colors.blueGrey,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 10.0,
+                                        ),
+                                        Text(
+                                          bloc.partyGuests[count].invitedEmail,
+                                          softWrap: true,
+                                          maxLines: null,
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      // PartyInfo(bloc.partyGuests),
                       ElevatedButton(
                         style: ButtonStyle(
                           fixedSize: MaterialStateProperty.all(
@@ -63,7 +102,12 @@ class PartyInviteScreen extends StatelessWidget {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => ItemsPage()));
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ItemsPage(),
+                            ),
+                          );
                         },
                         child: const Text(
                           'What is needed',

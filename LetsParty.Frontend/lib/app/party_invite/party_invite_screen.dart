@@ -95,7 +95,7 @@ class PartyInviteScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      ElevatedButton(
+                      /*ElevatedButton(
                         style: ButtonStyle(
                           fixedSize: MaterialStateProperty.all(
                             const Size(double.infinity, 50.0),
@@ -113,7 +113,7 @@ class PartyInviteScreen extends StatelessWidget {
                           'What is needed',
                           style: AppStyles.bodyStyle,
                         ),
-                      )
+                      )*/
                     ],
                   ),
                 ),

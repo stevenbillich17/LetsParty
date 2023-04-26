@@ -14,6 +14,7 @@ public class PartyMapper {
         }
 
         return Party.builder()
+                .id(partyDTO.getId())
                 .name(partyDTO.getName())
                 .description(partyDTO.getDescription())
                 .when(partyDTO.getWhen())
@@ -27,6 +28,7 @@ public class PartyMapper {
         String[] tags = party.getTags().split(",");
 
         return PartyDTO.builder()
+                .id(party.getId())
                 .name(party.getName())
                 .description(party.getDescription())
                 .when(party.getWhen())

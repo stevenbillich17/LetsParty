@@ -27,4 +27,10 @@ public class PartyController {
         PartyDTO party = partyService.getParty(id);
         return ResponseEntity.ok(party);
     }
+
+    @GetMapping
+    public ResponseEntity getAllParties() {
+        PartyDTO[] parties = partyService.getAllParties();
+        return ResponseEntity.ok(parties);
+    }
 }

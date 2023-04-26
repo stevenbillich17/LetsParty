@@ -1,6 +1,7 @@
 package com.hashbear.backend.controllers;
 import lombok.AllArgsConstructor;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,5 +31,15 @@ public class TestController {
         } else {
             return "The Db is not responding";
         }
+    }
+
+    @GetMapping("/auth/test")
+    public ResponseEntity<String> testAuth() {
+        return ResponseEntity.ok("Auth works, it is whitelisted");
+    }
+
+    @GetMapping("/something/test")
+    public ResponseEntity<String> testAuthShouldNotWork() {
+        return ResponseEntity.ok("Should not work, requires auth");
     }
 }

@@ -23,7 +23,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("").permitAll() //the list of whitelisted paths
+                .requestMatchers("/api/v1/auth/**").permitAll() //the list of whitelisted paths
                 .anyRequest().authenticated()   // the rest must be authenticated
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // a new session for each request

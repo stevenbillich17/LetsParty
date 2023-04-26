@@ -1,37 +1,27 @@
 package com.hashbear.backend.model.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import java.util.List;
+import java.util.Date;
+import java.util.UUID;
 
+@Builder
+@Getter
+@Setter
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-@Data
+@Table(name = "parties", schema = "public")
 public class Party {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
-    @Column(nullable = false)
+    @GeneratedValue(generator = "UUID")
+    private UUID id;
     private String name;
-
-    @ManyToOne(optional = false)
-    private Person owner;
-
-    @Column(nullable = false)
-    private String details;
-
-    @ManyToMany
-    private List<Person> invitedPeople;
-
-    @Lob
-    private byte[] partyImage;
-
+    private String description;
+    @Column(name = "party_date")
+    private Date when;
+    private Date rsvp;
+    private String location;
+    private String tags;
 }

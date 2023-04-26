@@ -1,61 +1,11 @@
+import 'dart:convert';
 import 'package:lets_party_frontend/core/models/party_model.dart';
+import 'package:http/http.dart' as http;
 
 class PartyData {
-  PartyData() {
-    goingParties = [
-      PartyModel(
-        description: 'Party 2 description',
-        name: 'Party 2 name',
-        pictureLink: '',
-        hostEmail: '',
-        rsvp: DateTime(2023),
-        when: DateTime(2023),
-        where: 'Your home',
-        tags: ['drinking'],
-        id: 'argnonijanwo',
-      ),
-      PartyModel(
-        description: 'Party 2 description',
-        name: 'Party 2 wow',
-        pictureLink:
-            'http://i.pinimg.com/564x/d5/e2/5c/d5e25c356923ae51e5eef2e682e3860f.jpg',
-        hostEmail: 'diana@mail.com',
-        rsvp: DateTime(2023),
-        when: DateTime(2023),
-        where: 'Your home',
-        tags: ['drinking'],
-        id: 'slngkaagbkjhaaijf',
-      ),
-    ];
-    hostedParties = [
-      PartyModel(
-        description: 'Party 1 description',
-        name: 'Party 1 name',
-        pictureLink:
-            'http://i.pinimg.com/564x/43/9e/69/439e69f59e8dc522f6a9124e956a3f39.jpg',
-        hostEmail: '',
-        rsvp: DateTime(2023),
-        when: DateTime(2023),
-        where: 'My home',
-        tags: ['drinking'],
-        id: 'agfkabvkbvlsjrhw',
-      ),
-      PartyModel(
-        description: 'Party 1 description',
-        name: 'Party 1 name',
-        pictureLink:
-            'https://i.pinimg.com/564x/22/8b/5b/228b5b38c6b23ab1aaf7f0788e2c62af.jpg',
-        hostEmail: '',
-        rsvp: DateTime(2023),
-        when: DateTime(2023),
-        where: 'My home',
-        tags: ['drinking'],
-        id: 'tsjsdrjysrjae',
-      ),
-    ];
-  }
+  PartyData() {}
 
-  List<PartyModel> goingParties = [];
+  String apiPath = 'http://192.168.1.100:8081/api/v1/parties';
   List<PartyModel> hostedParties = [];
 
   Future<List<PartyModel>> getListOfHostedParties() async {
@@ -64,13 +14,22 @@ class PartyData {
   }
 
   Future<List<PartyModel>> getListOfGoingParties() async {
-    await Future.delayed(const Duration(seconds: 1));
-    return goingParties;
+    final response = await http.get(Uri.parse(apiPath));
+    if (response.statusCode == 200) {
+      List<dynamic> data = json.decode(response.body);
+      return data.map((json) => PartyModel.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load data.');
+    }
   }
 
   Future<PartyModel> getParty(String id) async {
-    await Future.delayed(const Duration(seconds: 1));
-    List<PartyModel> parties = goingParties + hostedParties;
-    return parties.where((element) => element.id == id).toList()[0];
+    final response = await http.get(Uri.parse('$apiPath/$id'));
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = json.decode(response.body);
+      return PartyModel.fromJson(data);
+    } else {
+      throw Exception('Failed to load data.');
+    }
   }
 }

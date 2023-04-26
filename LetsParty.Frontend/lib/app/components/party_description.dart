@@ -60,7 +60,6 @@ class PartyDescription extends StatelessWidget with StringMixins {
                   ElevatedButton(
                     onPressed: () {},
                     style: ButtonStyle(
-                      // fixedSize: MaterialStateProperty.all(Size())
                       elevation: MaterialStateProperty.all(0.0),
                       enableFeedback: false,
                     ),

@@ -1,4 +1,20 @@
 class PartyModel {
+  factory PartyModel.fromJson(Map<String, dynamic> json) {
+    return PartyModel(
+      name: json['name'],
+      description: json['description'],
+      //TODO
+      pictureLink: '',
+      //TODO
+      hostEmail: '',
+      rsvp: DateTime.parse(json['rsvp']),
+      when: DateTime.parse(json['when']),
+      where: json['location'] ?? '',
+      tags: List.castFrom(json['tags']),
+      id: json['id'],
+    );
+  }
+
   PartyModel({
     required this.description,
     required this.name,

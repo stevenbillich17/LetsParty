@@ -2,18 +2,27 @@ package com.hashbear.backend.config;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 @Service
 public class JwtService {
 
     private static final String SECRET_KEY = "4B6250655368566D597133743677397A24432646294A404E635166546A576E5A7234753778214125442A472D4B6150645367556B58703273357638792F423F45";
+    private static final long TOKEN_EXPIRATION_TIME = 1000 * 60 * 24; // 1 day
 
+    /**
+     * Method that extracts the email from a given token
+     */
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject); // the subject is the email
     }
@@ -23,10 +32,38 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
+    public String generateToken(UserDetails userDetails) {
+        return generateToken(new HashMap<>(), userDetails);
+    }
+
+    public String generateToken(
+            Map<String, Object> extraClaims,
+            UserDetails userDetails
+    ) {
+        return Jwts.builder()
+                .setClaims(extraClaims)
+                .setSubject(userDetails.getUsername()) // the username is the email
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION_TIME))
+                .signWith(getSignInKey(), SignatureAlgorithm.HS512)
+                .compact();
+    }
+
+    public boolean isTokenValid(String token, UserDetails userDetails) {
+        final String username = extractUsername(token); // the username is the email
+        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
+    }
+
+    private boolean isTokenExpired(String token) {
+        return extractExpiration(token).before(new Date());
+    }
+
+    private Date extractExpiration(String token) {
+        return extractClaim(token, Claims::getExpiration);
+    }
+
     /**
      * Method that extracts all the claims for given JWT token
-     * @param token
-     * @return all the claims that were stored in the jwt token
      */
     private Claims extractAllClaims(String token) {
         return Jwts.parserBuilder()

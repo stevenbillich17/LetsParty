@@ -26,6 +26,6 @@ public class Party {
     private String location;
     private String tags;
 
-    @OneToMany(mappedBy = "party", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "partyId", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Invitations> invitations;
 }

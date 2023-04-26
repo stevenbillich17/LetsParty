@@ -10,8 +10,5 @@ import java.util.UUID;
 @Repository
 public interface InvitationsRepository extends JpaRepository<Invitations, Long> {
     List<Invitations> findByPartyId(UUID partyId);
-<<<<<<< Updated upstream
-=======
     List<Invitations> findByInvitedEmail(String email);
->>>>>>> Stashed changes
 }

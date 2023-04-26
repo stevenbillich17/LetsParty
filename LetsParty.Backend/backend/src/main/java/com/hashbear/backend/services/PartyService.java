@@ -25,23 +25,14 @@ public class PartyService {
             throw new RuntimeException("Party not found with id: " + id);
         return partyMapper.partyToPartyDTO(partyRepository.findById(id).get());
     }
-<<<<<<< Updated upstream
-=======
-<<<<<<< Updated upstream
-=======
->>>>>>> Stashed changes
 
     public PartyDTO[] getAllParties() {
         return partyRepository.findAll().stream().map(partyMapper::partyToPartyDTO).toArray(PartyDTO[]::new);
     }
-<<<<<<< Updated upstream
-=======
 
     public void deleteParty(UUID id) {
         if(!partyRepository.existsById(id))
             throw new RuntimeException("Party not found with id: " + id);
         partyRepository.deleteById(id);
     }
->>>>>>> Stashed changes
->>>>>>> Stashed changes
 }

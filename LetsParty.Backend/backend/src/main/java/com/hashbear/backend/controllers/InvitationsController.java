@@ -22,22 +22,15 @@ public class InvitationsController {
         return invitationsService.createInvitation(invitation);
     }
 
-<<<<<<< Updated upstream
-    @GetMapping("/{partyId}")
-=======
     @GetMapping("/party/{partyId}")
->>>>>>> Stashed changes
     public ResponseEntity getInvitationsForParty(@PathVariable("partyId") UUID partyId) {
         List<InvitationsDTO> invitations = invitationsService.getInvitationForParty(partyId);
         return ResponseEntity.ok(invitations);
     }
-<<<<<<< Updated upstream
-=======
 
     @GetMapping("/email/{email}")
     public ResponseEntity getInvitationsForEmail(@PathVariable("email") String email) {
         List<InvitationsDTO> invitations = invitationsService.getInvitationForEmail(email);
         return ResponseEntity.ok(invitations);
     }
->>>>>>> Stashed changes
 }

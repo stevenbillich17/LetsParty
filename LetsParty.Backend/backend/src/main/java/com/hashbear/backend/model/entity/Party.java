@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -24,4 +25,7 @@ public class Party {
     private Date rsvp;
     private String location;
     private String tags;
+
+    @OneToMany(mappedBy = "party", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Invitations> invitations;
 }

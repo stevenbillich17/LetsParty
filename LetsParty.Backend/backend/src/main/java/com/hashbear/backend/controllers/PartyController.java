@@ -27,10 +27,25 @@ public class PartyController {
         PartyDTO party = partyService.getParty(id);
         return ResponseEntity.ok(party);
     }
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
 
     @GetMapping
     public ResponseEntity getAllParties() {
         PartyDTO[] parties = partyService.getAllParties();
         return ResponseEntity.ok(parties);
     }
+<<<<<<< Updated upstream
+=======
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteParty(@PathVariable("id") UUID id) {
+        partyService.deleteParty(id);
+        return ResponseEntity.ok().build();
+    }
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 }

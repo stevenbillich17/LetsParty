@@ -103,9 +103,9 @@ class LoginScreen extends StatelessWidget {
             child: Consumer<LoginBloc>(
               builder: (context, bloc, child) => ElevatedButton(
                 onPressed: () async {
-                  final bool loginSuccessful =
+                  final int loginSuccessful =
                   await bloc.login(context, _email, _password);
-                  if (loginSuccessful) {
+                  if (loginSuccessful == 200) {
                     Navigator.pop(context);
                     Navigator.push(
                       context,

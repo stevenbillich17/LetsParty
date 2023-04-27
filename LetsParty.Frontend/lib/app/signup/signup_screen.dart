@@ -45,7 +45,7 @@ class SignUpScreen extends StatelessWidget {
                     children: [
                       InputField(
                         hintText: 'Name',
-                        onChanged: (val) {},
+                        onChanged: (val) {bloc.name = val;},
                         textInputAction: TextInputAction.next,
                         keyboardType: TextInputType.emailAddress,
                         validator: (name) {
@@ -60,7 +60,7 @@ class SignUpScreen extends StatelessWidget {
                       ),
                       InputField(
                         hintText: 'Email',
-                        onChanged: (val) {},
+                        onChanged: (val) {bloc.email = val;},
                         textInputAction: TextInputAction.next,
                         keyboardType: TextInputType.emailAddress,
                         validator: (email) {
@@ -75,7 +75,7 @@ class SignUpScreen extends StatelessWidget {
                       ),
                       InputField(
                         hintText: 'Password',
-                        onChanged: (val) {},
+                        onChanged: (val) {bloc.password = val;},
                         validator: (password) {
                           if (password == null || password.isEmpty) {
                             return 'Empty password';
@@ -122,14 +122,13 @@ class SignUpScreen extends StatelessWidget {
             child: ElevatedButton(
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
-                  final String? message = await bloc.createAccount(context);
-                  if (message != null) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(message),
-                      ),
-                    );
-                  } else {
+                  final int? status = await bloc.createAccount(context);
+                  if (status == 200) {
+                    // ScaffoldMessenger.of(context).showSnackBar(
+                    //   SnackBar(
+                    //     content: Text(message),
+                    //   ),
+                    // );
                     Navigator.pop(context);
                     Navigator.pop(context);
                     Navigator.push(
@@ -138,6 +137,12 @@ class SignUpScreen extends StatelessWidget {
                         builder: (context) => const MyHomePage(),
                       ),
                     );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Error while signing up, try again later!'),
+                          ),
+                        );
                   }
                 }
               },

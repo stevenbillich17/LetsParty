@@ -106,6 +106,7 @@ class LoginScreen extends StatelessWidget {
                   final int loginSuccessful =
                   await bloc.login(context, _email, _password);
                   if (loginSuccessful == 200) {
+                    print('Login successful');
                     Navigator.pop(context);
                     Navigator.push(
                       context,

@@ -6,6 +6,7 @@ import 'package:lets_party_frontend/assets/app_colors.dart';
 import 'package:lets_party_frontend/assets/app_dimens.dart';
 import 'package:lets_party_frontend/assets/app_styles.dart';
 import 'package:lets_party_frontend/app/components/party_description.dart';
+import 'dart:math' as math;
 
 class PartyInviteScreen extends StatelessWidget {
   PartyInviteScreen(this.partyID, {super.key});
@@ -72,9 +73,9 @@ class PartyInviteScreen extends StatelessWidget {
                                         Container(
                                           width: 70,
                                           height: 70,
-                                          decoration: const BoxDecoration(
+                                          decoration: BoxDecoration(
                                             shape: BoxShape.circle,
-                                            color: Colors.blueGrey,
+                                            color: Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(0.3),
                                           ),
                                         ),
                                         SizedBox(

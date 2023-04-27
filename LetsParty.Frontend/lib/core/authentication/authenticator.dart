@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 
 class Authenticator {
   static const String _registerUrl = 'http://10.0.2.2:8081/api/v1/auth/register';
-  static const String _authUrl = 'http://192.168.0.49:8081/api/v1/auth/authenticate';
+  static const String _authUrl = 'http://10.0.2.2:8081/api/v1/auth/authenticate';
 
   static String token = '';
   static String email = '';

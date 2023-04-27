@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lets_party_frontend/assets/app_dimens.dart';
+import 'dart:math' as math;
 
 class PartyButton extends StatelessWidget {
   const PartyButton({
@@ -36,7 +37,7 @@ class PartyButton extends StatelessWidget {
                         height: 130,
                         errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
                           return Container(
-                            color: Colors.grey[200],
+                            color: Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(0.5),
                           );
                         },
                       ),

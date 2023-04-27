@@ -12,8 +12,8 @@ class HomeScreenBloc extends ChangeNotifier {
   final PartyData _partyData = PartyData();
 
   Future<void> loadScreen() async {
-    goingParties = await _partyData.getListOfGoingParties();
-    hostedParties = await _partyData.getListOfHostedParties();
+    goingParties = (await _partyData.getListOfGoingParties()).sublist(3);
+    hostedParties = goingParties.sublist(0,2);
     notifyListeners();
   }
 }

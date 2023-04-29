@@ -35,4 +35,12 @@ public class PartyService {
             throw new RuntimeException("Party not found with id: " + id);
         partyRepository.deleteById(id);
     }
+
+    public PartyDTO[] getHostedParties(String email) {
+        return partyRepository.findAllByHostEmail(email).stream().map(partyMapper::partyToPartyDTO).toArray(PartyDTO[]::new);
+    }
+
+    public PartyDTO[] getAllPartiesForInvitedEmail(String invitedEmail) {
+        return partyRepository.findAllByInvitedEmail(invitedEmail).stream().map(partyMapper::partyToPartyDTO).toArray(PartyDTO[]::new);
+    }
 }

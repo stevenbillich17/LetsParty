@@ -28,7 +28,7 @@ public class InvitationsController {
         return ResponseEntity.ok(invitations);
     }
 
-    @GetMapping("/email/{email}")
+    @GetMapping("/invited/{email}")
     public ResponseEntity getInvitationsForEmail(@PathVariable("email") String email) {
         List<InvitationsDTO> invitations = invitationsService.getInvitationForEmail(email);
         return ResponseEntity.ok(invitations);

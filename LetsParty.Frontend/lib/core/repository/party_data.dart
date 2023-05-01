@@ -6,22 +6,26 @@ import 'package:lets_party_frontend/core/authentication/authenticator.dart';
 class PartyData {
   PartyData();
 
-  String apiPath = 'http://10.0.2.2:8081/api/v1/parties';
-  List<PartyModel> hostedParties = [
-  ];
+  String apiPath = 'http://10.0.2.2:8081/api/v1';
+  final String _userEmail = Authenticator.email;
 
-  Map<String, String> headers = {
+  final Map<String, String> _headers = {
     'Authorization': 'Bearer ${Authenticator.token}',
-    'Content-Type': 'application/json', // set the content-type header to indicate that the body is JSON
+    'Content-Type': 'application/json'
   };
 
   Future<List<PartyModel>> getListOfHostedParties() async {
-    await Future.delayed(const Duration(seconds: 1));
-    return hostedParties;
+    final response = await http.get(Uri.parse('$apiPath/parties/host/$_userEmail'), headers: _headers);
+    if (response.statusCode == 200) {
+      List<dynamic> data = json.decode(response.body);
+      return data.map((json) => PartyModel.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load data.');
+    }
   }
 
   Future<List<PartyModel>> getListOfGoingParties() async {
-    final response = await http.get(Uri.parse(apiPath), headers: headers);
+    final response = await http.get(Uri.parse('$apiPath/parties/invited/$_userEmail'), headers: _headers);
     if (response.statusCode == 200) {
       List<dynamic> data = json.decode(response.body);
       return data.map((json) => PartyModel.fromJson(json)).toList();
@@ -32,7 +36,7 @@ class PartyData {
 
   Future<PartyModel> getParty(String id) async {
     final response =
-        await http.get(Uri.parse('$apiPath/$id'), headers: headers);
+        await http.get(Uri.parse('$apiPath/parties/$id'), headers: _headers);
     if (response.statusCode == 200) {
       Map<String, dynamic> data = json.decode(response.body);
       return PartyModel.fromJson(data);
@@ -49,16 +53,15 @@ class PartyData {
       'when': when.toIso8601String(),
       'location': location,
       'tags': tags,
-      'hostEmail': Authenticator.email
+      'hostEmail': _userEmail
     };
 
-    final response = await http.post(Uri.parse(apiPath), headers: headers, body: jsonEncode(body));
+    final response = await http.post(Uri.parse('$apiPath/parties'), headers: _headers, body: jsonEncode(body));
 
     if (response.statusCode == 200) {
       print('Party created.');
     } else {
       throw Exception('Failed to create party.');
     }
-
   }
 }

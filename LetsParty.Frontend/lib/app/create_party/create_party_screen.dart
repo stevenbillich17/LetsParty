@@ -7,7 +7,7 @@ import 'package:lets_party_frontend/gen/fonts.gen.dart';
 import 'package:provider/provider.dart';
 import 'package:lets_party_frontend/assets/app_dimens.dart';
 
-import '../home/home_screen.dart';
+import 'package:lets_party_frontend/app/home/home_screen.dart';
 
 class CreatePartyScreen extends StatelessWidget {
   CreatePartyScreen({super.key});
@@ -140,7 +140,8 @@ class CreatePartyScreen extends StatelessWidget {
                               child: Text(
                                 cpb.when != null
                                     ? CreatePartyBloc.getDateFormatted(
-                                        cpb.when!)
+                                        cpb.when!,
+                                      )
                                     : 'Choose date',
                               ),
                             ),
@@ -172,7 +173,8 @@ class CreatePartyScreen extends StatelessWidget {
                               child: Text(
                                 cpb.rsvp != null
                                     ? CreatePartyBloc.getDateFormatted(
-                                        cpb.rsvp!)
+                                        cpb.rsvp!,
+                                      )
                                     : 'Choose date',
                               ),
                             ),
@@ -257,8 +259,10 @@ class CreatePartyScreen extends StatelessWidget {
                 //   MaterialPageRoute(builder: (context) => Container()),
                 // );
                 Navigator.pop(context);
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => MyHomePage()));
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MyHomePage()),
+                );
               },
               style: ButtonStyle(
                 fixedSize: MaterialStateProperty.all(

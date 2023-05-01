@@ -23,7 +23,7 @@ class InvitationsData {
   }
 
   Future<List<InvitationsModel>> getListOfInvitationsForUser(String mail) async {
-    final response = await http.get(Uri.parse('$apiPath/email/$mail'), headers: headers);
+    final response = await http.get(Uri.parse('$apiPath/invited/$mail'), headers: headers);
     if (response.statusCode == 200) {
       List<dynamic> data = json.decode(response.body);
       return data.map((json) => InvitationsModel.fromJson(json)).toList();

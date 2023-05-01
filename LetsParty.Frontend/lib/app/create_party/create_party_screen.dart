@@ -3,10 +3,9 @@ import 'package:lets_party_frontend/app/components/input_field_widgets.dart';
 import 'package:lets_party_frontend/app/create_party/create_party_bloc.dart';
 import 'package:lets_party_frontend/app/create_party/image_picking_zone.dart';
 import 'package:lets_party_frontend/assets/app_colors.dart';
-import 'package:lets_party_frontend/gen/fonts.gen.dart';
+import 'package:lets_party_frontend/assets/app_styles.dart';
 import 'package:provider/provider.dart';
 import 'package:lets_party_frontend/assets/app_dimens.dart';
-
 import 'package:lets_party_frontend/app/home/home_screen.dart';
 
 class CreatePartyScreen extends StatelessWidget {
@@ -14,6 +13,10 @@ class CreatePartyScreen extends StatelessWidget {
 
   final bloc = CreatePartyBloc();
   final dateRegex = RegExp(r'(\d{4}-\d{2}-\d{2})');
+  static const TextStyle _labelStyle = TextStyle(
+    fontWeight: FontWeight.bold,
+    fontSize: 25,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -36,20 +39,12 @@ class CreatePartyScreen extends StatelessWidget {
                 ),
               ),
             ),
-            title: const Text(
-              'create party',
-              style: TextStyle(
-                color: appBlack,
-                fontSize: 36.0,
-                fontFamily: FontFamily.keepOnTruckin,
-              ),
-            ),
+            title: const Text('create party', style: AppStyles.appBarStyle),
             centerTitle: true,
           ),
           body: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppDimens.padding_2x,
-              vertical: AppDimens.padding_2x,
+            padding: const EdgeInsets.all(
+              AppDimens.padding_2x,
             ),
             child: SingleChildScrollView(
               child: Column(
@@ -63,10 +58,7 @@ class CreatePartyScreen extends StatelessWidget {
                   ),
                   const Text(
                     'Name',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25,
-                    ),
+                    style: _labelStyle,
                   ),
                   const SizedBox(
                     height: AppDimens.padding,
@@ -90,10 +82,7 @@ class CreatePartyScreen extends StatelessWidget {
                   ),
                   const Text(
                     'How',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25,
-                    ),
+                    style: _labelStyle,
                   ),
                   const SizedBox(
                     height: AppDimens.padding,
@@ -122,10 +111,7 @@ class CreatePartyScreen extends StatelessWidget {
                         children: [
                           const Text(
                             'WHEN',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 25,
-                            ),
+                            style: _labelStyle,
                           ),
                           Consumer<CreatePartyBloc>(
                             builder: (context, cpb, child) => ElevatedButton(
@@ -155,10 +141,7 @@ class CreatePartyScreen extends StatelessWidget {
                         children: [
                           const Text(
                             'RSVP',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 25,
-                            ),
+                            style: _labelStyle,
                           ),
                           Consumer<CreatePartyBloc>(
                             builder: (context, cpb, child) => ElevatedButton(
@@ -188,10 +171,7 @@ class CreatePartyScreen extends StatelessWidget {
                   ),
                   const Text(
                     'Where',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25,
-                    ),
+                    style: _labelStyle,
                   ),
                   const SizedBox(
                     height: AppDimens.padding,
@@ -215,10 +195,7 @@ class CreatePartyScreen extends StatelessWidget {
                   ),
                   const Text(
                     'Create tags (optional)',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25,
-                    ),
+                    style: _labelStyle,
                   ),
                   const SizedBox(
                     height: AppDimens.padding,
@@ -240,10 +217,7 @@ class CreatePartyScreen extends StatelessWidget {
                     },
                   ),
                   const SizedBox(
-                    height: AppDimens.padding_4x,
-                  ),
-                  const SizedBox(
-                    height: AppDimens.padding_4x,
+                    height: AppDimens.padding_8x,
                   ),
                 ],
               ),
@@ -254,10 +228,6 @@ class CreatePartyScreen extends StatelessWidget {
             child: ElevatedButton(
               onPressed: () async {
                 await bloc.createParty();
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => Container()),
-                // );
                 Navigator.pop(context);
                 Navigator.pushReplacement(
                   context,
@@ -273,7 +243,8 @@ class CreatePartyScreen extends StatelessWidget {
                 ),
                 shape: MaterialStateProperty.all(
                   RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(100.0),
+                    borderRadius:
+                        BorderRadius.circular(AppDimens.roundedButtonCorners),
                   ),
                 ),
               ),

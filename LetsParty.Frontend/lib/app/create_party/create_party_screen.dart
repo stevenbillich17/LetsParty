@@ -7,6 +7,8 @@ import 'package:lets_party_frontend/gen/fonts.gen.dart';
 import 'package:provider/provider.dart';
 import 'package:lets_party_frontend/assets/app_dimens.dart';
 
+import '../home/home_screen.dart';
+
 class CreatePartyScreen extends StatelessWidget {
   CreatePartyScreen({super.key});
 
@@ -38,7 +40,7 @@ class CreatePartyScreen extends StatelessWidget {
               'create party',
               style: TextStyle(
                 color: appBlack,
-                fontSize: 42.0,
+                fontSize: 36.0,
                 fontFamily: FontFamily.keepOnTruckin,
               ),
             ),
@@ -132,11 +134,13 @@ class CreatePartyScreen extends StatelessWidget {
                               },
                               style: ButtonStyle(
                                 backgroundColor: MaterialStateProperty.all(
-                                    appYellow.withOpacity(0.5),),
+                                  appYellow.withOpacity(0.5),
+                                ),
                               ),
                               child: Text(
                                 cpb.when != null
-                                    ? 'Birthday: ${CreatePartyBloc.getDateFormatted(cpb.when!)}'
+                                    ? CreatePartyBloc.getDateFormatted(
+                                        cpb.when!)
                                     : 'Choose date',
                               ),
                             ),
@@ -162,11 +166,13 @@ class CreatePartyScreen extends StatelessWidget {
                               },
                               style: ButtonStyle(
                                 backgroundColor: MaterialStateProperty.all(
-                                    appYellow.withOpacity(0.5),),
+                                  appYellow.withOpacity(0.5),
+                                ),
                               ),
                               child: Text(
                                 cpb.rsvp != null
-                                    ? 'Birthday: ${CreatePartyBloc.getDateFormatted(cpb.rsvp!)}'
+                                    ? CreatePartyBloc.getDateFormatted(
+                                        cpb.rsvp!)
                                     : 'Choose date',
                               ),
                             ),
@@ -194,7 +200,7 @@ class CreatePartyScreen extends StatelessWidget {
                       bloc.where = val;
                     },
                     textInputAction: TextInputAction.next,
-                    keyboardType: TextInputType.emailAddress,
+                    keyboardType: TextInputType.text,
                     validator: (description) {
                       if (description != null && description != '') {
                         return null;
@@ -244,9 +250,15 @@ class CreatePartyScreen extends StatelessWidget {
           floatingActionButton: Padding(
             padding: const EdgeInsets.all(AppDimens.padding_2x),
             child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Container()),);
+              onPressed: () async {
+                await bloc.createParty();
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => Container()),
+                // );
+                Navigator.pop(context);
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => MyHomePage()));
               },
               style: ButtonStyle(
                 fixedSize: MaterialStateProperty.all(

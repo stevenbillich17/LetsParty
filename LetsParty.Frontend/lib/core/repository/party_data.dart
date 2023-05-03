@@ -7,13 +7,11 @@ class PartyData {
   PartyData();
 
   String apiPath = 'http://10.0.2.2:8081/api/v1';
-  List<PartyModel> hostedParties = [
-  ];
-
   final String _userEmail = Authenticator.email;
 
   final Map<String, String> _headers = {
-    'Authorization': 'Bearer ${Authenticator.token}'
+    'Authorization': 'Bearer ${Authenticator.token}',
+    'Content-Type': 'application/json'
   };
 
   Future<List<PartyModel>> getListOfHostedParties() async {
@@ -44,6 +42,26 @@ class PartyData {
       return PartyModel.fromJson(data);
     } else {
       throw Exception('Failed to load data.');
+    }
+  }
+
+  Future<void> createParty(String name, String description, DateTime rsvp, DateTime when, String location, List<String> tags) async {
+    Map<String, dynamic> body = {
+      'name': name,
+      'description': description,
+      'rsvp': rsvp.toIso8601String(),
+      'when': when.toIso8601String(),
+      'location': location,
+      'tags': tags,
+      'hostEmail': _userEmail
+    };
+
+    final response = await http.post(Uri.parse('$apiPath/parties'), headers: _headers, body: jsonEncode(body));
+
+    if (response.statusCode == 200) {
+      print('Party created.');
+    } else {
+      throw Exception('Failed to create party.');
     }
   }
 }

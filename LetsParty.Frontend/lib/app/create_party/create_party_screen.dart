@@ -3,15 +3,20 @@ import 'package:lets_party_frontend/app/components/input_field_widgets.dart';
 import 'package:lets_party_frontend/app/create_party/create_party_bloc.dart';
 import 'package:lets_party_frontend/app/create_party/image_picking_zone.dart';
 import 'package:lets_party_frontend/assets/app_colors.dart';
-import 'package:lets_party_frontend/gen/fonts.gen.dart';
+import 'package:lets_party_frontend/assets/app_styles.dart';
 import 'package:provider/provider.dart';
 import 'package:lets_party_frontend/assets/app_dimens.dart';
+import 'package:lets_party_frontend/app/home/home_screen.dart';
 
 class CreatePartyScreen extends StatelessWidget {
   CreatePartyScreen({super.key});
 
   final bloc = CreatePartyBloc();
   final dateRegex = RegExp(r'(\d{4}-\d{2}-\d{2})');
+  static const TextStyle _labelStyle = TextStyle(
+    fontWeight: FontWeight.bold,
+    fontSize: 25,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -34,20 +39,12 @@ class CreatePartyScreen extends StatelessWidget {
                 ),
               ),
             ),
-            title: const Text(
-              'create party',
-              style: TextStyle(
-                color: appBlack,
-                fontSize: 42.0,
-                fontFamily: FontFamily.keepOnTruckin,
-              ),
-            ),
+            title: const Text('create party', style: AppStyles.appBarStyle),
             centerTitle: true,
           ),
           body: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppDimens.padding_2x,
-              vertical: AppDimens.padding_2x,
+            padding: const EdgeInsets.all(
+              AppDimens.padding_2x,
             ),
             child: SingleChildScrollView(
               child: Column(
@@ -61,10 +58,7 @@ class CreatePartyScreen extends StatelessWidget {
                   ),
                   const Text(
                     'Name',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25,
-                    ),
+                    style: _labelStyle,
                   ),
                   const SizedBox(
                     height: AppDimens.padding,
@@ -88,10 +82,7 @@ class CreatePartyScreen extends StatelessWidget {
                   ),
                   const Text(
                     'How',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25,
-                    ),
+                    style: _labelStyle,
                   ),
                   const SizedBox(
                     height: AppDimens.padding,
@@ -120,10 +111,7 @@ class CreatePartyScreen extends StatelessWidget {
                         children: [
                           const Text(
                             'WHEN',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 25,
-                            ),
+                            style: _labelStyle,
                           ),
                           Consumer<CreatePartyBloc>(
                             builder: (context, cpb, child) => ElevatedButton(
@@ -132,11 +120,14 @@ class CreatePartyScreen extends StatelessWidget {
                               },
                               style: ButtonStyle(
                                 backgroundColor: MaterialStateProperty.all(
-                                    appYellow.withOpacity(0.5),),
+                                  appYellow.withOpacity(0.5),
+                                ),
                               ),
                               child: Text(
                                 cpb.when != null
-                                    ? 'Birthday: ${CreatePartyBloc.getDateFormatted(cpb.when!)}'
+                                    ? CreatePartyBloc.getDateFormatted(
+                                        cpb.when!,
+                                      )
                                     : 'Choose date',
                               ),
                             ),
@@ -150,10 +141,7 @@ class CreatePartyScreen extends StatelessWidget {
                         children: [
                           const Text(
                             'RSVP',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 25,
-                            ),
+                            style: _labelStyle,
                           ),
                           Consumer<CreatePartyBloc>(
                             builder: (context, cpb, child) => ElevatedButton(
@@ -162,11 +150,14 @@ class CreatePartyScreen extends StatelessWidget {
                               },
                               style: ButtonStyle(
                                 backgroundColor: MaterialStateProperty.all(
-                                    appYellow.withOpacity(0.5),),
+                                  appYellow.withOpacity(0.5),
+                                ),
                               ),
                               child: Text(
                                 cpb.rsvp != null
-                                    ? 'Birthday: ${CreatePartyBloc.getDateFormatted(cpb.rsvp!)}'
+                                    ? CreatePartyBloc.getDateFormatted(
+                                        cpb.rsvp!,
+                                      )
                                     : 'Choose date',
                               ),
                             ),
@@ -180,10 +171,7 @@ class CreatePartyScreen extends StatelessWidget {
                   ),
                   const Text(
                     'Where',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25,
-                    ),
+                    style: _labelStyle,
                   ),
                   const SizedBox(
                     height: AppDimens.padding,
@@ -194,7 +182,7 @@ class CreatePartyScreen extends StatelessWidget {
                       bloc.where = val;
                     },
                     textInputAction: TextInputAction.next,
-                    keyboardType: TextInputType.emailAddress,
+                    keyboardType: TextInputType.text,
                     validator: (description) {
                       if (description != null && description != '') {
                         return null;
@@ -207,10 +195,7 @@ class CreatePartyScreen extends StatelessWidget {
                   ),
                   const Text(
                     'Create tags (optional)',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25,
-                    ),
+                    style: _labelStyle,
                   ),
                   const SizedBox(
                     height: AppDimens.padding,
@@ -232,10 +217,7 @@ class CreatePartyScreen extends StatelessWidget {
                     },
                   ),
                   const SizedBox(
-                    height: AppDimens.padding_4x,
-                  ),
-                  const SizedBox(
-                    height: AppDimens.padding_4x,
+                    height: AppDimens.padding_8x,
                   ),
                 ],
               ),
@@ -244,9 +226,13 @@ class CreatePartyScreen extends StatelessWidget {
           floatingActionButton: Padding(
             padding: const EdgeInsets.all(AppDimens.padding_2x),
             child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Container()),);
+              onPressed: () async {
+                await bloc.createParty();
+                Navigator.pop(context);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MyHomePage()),
+                );
               },
               style: ButtonStyle(
                 fixedSize: MaterialStateProperty.all(
@@ -257,7 +243,8 @@ class CreatePartyScreen extends StatelessWidget {
                 ),
                 shape: MaterialStateProperty.all(
                   RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(100.0),
+                    borderRadius:
+                        BorderRadius.circular(AppDimens.roundedButtonCorners),
                   ),
                 ),
               ),

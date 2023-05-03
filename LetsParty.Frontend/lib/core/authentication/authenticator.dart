@@ -37,6 +37,7 @@ class Authenticator {
     Authenticator.email = email;
 
     JwtStorage.storeJwt(token);
+    JwtStorage.storeEmail(email);
     return response.statusCode;
   }
 
@@ -64,6 +65,7 @@ class Authenticator {
     Authenticator.email = email;
 
     JwtStorage.storeJwt(token);
+    JwtStorage.storeEmail(email);
     return response.statusCode;
 
   }
@@ -72,18 +74,24 @@ class Authenticator {
     if (token == '') {
       token =  await JwtStorage.getJwt();
     }
-    print("BA" + token);
     return token;
+  }
+
+  static getEmail() async {
+    if (email == '') {
+      email = await JwtStorage.getEmail();
+    }
+    return email;
   }
 
   static Future<bool> verifyIfJwtIsValid() async {
     await getJwt();
+    await getEmail();
     final Map<String, String> headers = {
       'Authorization': 'Bearer ${Authenticator.token}',
       'Content-Type': 'application/json'
     };
     final response = await http.get(Uri.parse(_tokenVerifyUrl), headers: headers);
-    print(response.statusCode);
     return response.statusCode == 200;
   }
 

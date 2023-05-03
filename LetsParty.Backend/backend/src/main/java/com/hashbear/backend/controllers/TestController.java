@@ -1,4 +1,5 @@
 package com.hashbear.backend.controllers;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import lombok.AllArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
@@ -41,5 +42,10 @@ public class TestController {
     @GetMapping("/something/test")
     public ResponseEntity<String> testAuthShouldNotWork() {
         return ResponseEntity.ok("Should not work, requires auth");
+    }
+
+    @GetMapping("/verifyToken")
+    public ResponseEntity<String> verifyToken() {
+        return ResponseEntity.ok("Jwt token is good");
     }
 }

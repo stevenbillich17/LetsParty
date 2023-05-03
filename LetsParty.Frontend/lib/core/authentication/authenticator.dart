@@ -1,9 +1,12 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:lets_party_frontend/core/authentication/jwt_storage.dart';
 
 class Authenticator {
   static const String _registerUrl = 'http://10.0.2.2:8081/api/v1/auth/register';
   static const String _authUrl = 'http://10.0.2.2:8081/api/v1/auth/authenticate';
+  static const String _tokenVerifyUrl = 'http://10.0.2.2:8081/api/v1/verifyToken';
+
 
   static String token = '';
   static String email = '';
@@ -33,6 +36,7 @@ class Authenticator {
     token = jsonResponse['token'];
     Authenticator.email = email;
 
+    JwtStorage.storeJwt(token);
     return response.statusCode;
   }
 
@@ -59,8 +63,28 @@ class Authenticator {
     token = jsonResponse['token'];
     Authenticator.email = email;
 
+    JwtStorage.storeJwt(token);
     return response.statusCode;
 
+  }
+
+  static getJwt() async{
+    if (token == '') {
+      token =  await JwtStorage.getJwt();
+    }
+    print("BA" + token);
+    return token;
+  }
+
+  static Future<bool> verifyIfJwtIsValid() async {
+    await getJwt();
+    final Map<String, String> headers = {
+      'Authorization': 'Bearer ${Authenticator.token}',
+      'Content-Type': 'application/json'
+    };
+    final response = await http.get(Uri.parse(_tokenVerifyUrl), headers: headers);
+    print(response.statusCode);
+    return response.statusCode == 200;
   }
 
 

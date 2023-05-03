@@ -19,5 +19,6 @@ public class PartyDTO {
     private Date when;
     private Date rsvp;
     private String location;
+    private String hostEmail;
     private String[] tags;
 }

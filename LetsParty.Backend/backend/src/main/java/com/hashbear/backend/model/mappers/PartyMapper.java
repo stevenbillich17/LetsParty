@@ -7,10 +7,10 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public class PartyMapper {
     public Party partyDTOToParty(PartyDTO partyDTO) {
-        String tags = "";
+        StringBuilder tags = new StringBuilder();
 
         for (String tag : partyDTO.getTags()) {
-            tags += tag + ",";
+            tags.append(tag).append(",");
         }
 
         return Party.builder()
@@ -20,7 +20,8 @@ public class PartyMapper {
                 .when(partyDTO.getWhen())
                 .rsvp(partyDTO.getRsvp())
                 .location(partyDTO.getLocation())
-                .tags(tags)
+                .tags(tags.toString())
+                .hostEmail(partyDTO.getHostEmail())
                 .build();
     }
 
@@ -35,6 +36,7 @@ public class PartyMapper {
                 .rsvp(party.getRsvp())
                 .location(party.getLocation())
                 .tags(tags)
+                .hostEmail(party.getHostEmail())
                 .build();
     }
 }

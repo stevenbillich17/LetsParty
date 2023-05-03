@@ -5,8 +5,7 @@ class PartyModel {
       description: json['description'],
       //TODO
       pictureLink: '',
-      //TODO
-      hostEmail: '',
+      hostEmail: json['hostEmail'] ?? '',
       rsvp: DateTime.parse(json['rsvp']),
       when: DateTime.parse(json['when']),
       where: json['location'] ?? '',

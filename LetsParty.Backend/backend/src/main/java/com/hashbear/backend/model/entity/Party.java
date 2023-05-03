@@ -26,6 +26,8 @@ public class Party {
     private String location;
     private String tags;
 
+    private String hostEmail;
+
     @OneToMany(mappedBy = "partyId", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Invitations> invitations;
 }

@@ -34,6 +34,18 @@ public class PartyController {
         return ResponseEntity.ok(parties);
     }
 
+    @GetMapping("/host/{email}")
+    public ResponseEntity getHostedParties(@PathVariable("email") String email) {
+        PartyDTO[] parties = partyService.getHostedParties(email);
+        return ResponseEntity.ok(parties);
+    }
+
+    @GetMapping("/invited/{email}")
+    public ResponseEntity getInvitedParties(@PathVariable("email") String email) {
+        PartyDTO[] parties = partyService.getAllPartiesForInvitedEmail(email);
+        return ResponseEntity.ok(parties);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity deleteParty(@PathVariable("id") UUID id) {
         partyService.deleteParty(id);

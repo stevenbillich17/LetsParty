@@ -9,11 +9,13 @@ class HomeScreenBloc extends ChangeNotifier {
 
   List<PartyModel> goingParties = [];
   List<PartyModel> hostedParties = [];
+  bool isLoadingDone = false;
   final PartyData _partyData = PartyData();
 
   Future<void> loadScreen() async {
     goingParties = await _partyData.getListOfGoingParties();
     hostedParties = await _partyData.getListOfHostedParties();
+    isLoadingDone = true;
     notifyListeners();
   }
 }

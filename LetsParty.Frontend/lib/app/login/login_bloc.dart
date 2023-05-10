@@ -10,7 +10,7 @@ class LoginBloc extends ChangeNotifier {
     this.email = email;
     this.password = password;
     if (email == null || password == null) return -1;
-    return Authenticator.authenticate(email!, password!);
+    return Authenticator.authenticate(email, password);
   }
 
   void changePasswordVisibility() {

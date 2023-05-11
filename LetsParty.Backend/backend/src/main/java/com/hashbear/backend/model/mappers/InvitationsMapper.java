@@ -16,21 +16,17 @@ public class InvitationsMapper {
     private PartyService partyService;
 
     public Invitations invitationsDTOtoInvitations(InvitationsDTO invitationsDTO) {
-        final PartyMapper partyMapper = new PartyMapper();
+        final PartyMapper partyMapper;
 
-        Invitations invitations = Invitations.builder()
+        return Invitations.builder()
                 .partyId(invitationsDTO.getPartyId())
                 .invitedEmail(invitationsDTO.getInvitedEmail())
                 .status(invitationsDTO.getStatus())
                 .build();
-
-//        partyMapper.partyDTOToParty(partyService.getParty(invitationsDTO.getPartyId())).setInvitations(Collections.singletonList(invitations));
-
-        return invitations;
     }
 
     public InvitationsDTO invitationsToInvitationsDTO(Invitations invitations) {
-        final PartyMapper partyMapper = new PartyMapper();
+        final PartyMapper partyMapper;
         return InvitationsDTO.builder()
                 .partyId(invitations.getPartyId())
                 .invitedEmail(invitations.getInvitedEmail())

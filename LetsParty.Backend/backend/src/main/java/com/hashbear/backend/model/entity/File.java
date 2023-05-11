@@ -1,7 +1,10 @@
 package com.hashbear.backend.model.entity;
+
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+
+import java.util.UUID;
 
 @Entity
 @Builder
@@ -14,7 +17,7 @@ public class File {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id;
+    private UUID id;
     private String name;
     private String contentType;
     private Long size;

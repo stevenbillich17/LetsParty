@@ -30,4 +30,7 @@ public class Party {
 
     @OneToMany(mappedBy = "partyId", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Invitations> invitations;
+
+    @OneToOne
+    private File image;
 }

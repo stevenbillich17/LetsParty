@@ -14,6 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -47,7 +48,7 @@ public class FileController {
     private FileResponse mapToFileResponse(File fileEntity) {
         String downloadURL = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/files/")
-                .path(fileEntity.getId())
+                .path(fileEntity.getId().toString())
                 .toUriString();
         FileResponse fileResponse = new FileResponse();
         fileResponse.setId(fileEntity.getId());
@@ -60,7 +61,7 @@ public class FileController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<byte[]> getFile(@PathVariable String id) {
+    public ResponseEntity<byte[]> getFile(@PathVariable UUID id) {
         Optional<File> fileEntityOptional = fileService.getFile(id);
 
         if (fileEntityOptional.isEmpty()) {

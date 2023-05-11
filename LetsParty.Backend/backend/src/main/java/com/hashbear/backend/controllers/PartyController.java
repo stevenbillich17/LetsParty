@@ -13,6 +13,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @RequestMapping("/api/v1/parties")
 public class PartyController {
+
     @Autowired
     private final PartyService partyService;
 

@@ -21,4 +21,5 @@ public class PartyDTO {
     private String location;
     private String hostEmail;
     private String[] tags;
+    private UUID image;
 }

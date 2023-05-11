@@ -28,9 +28,9 @@ public class InvitationsController {
         return ResponseEntity.ok(invitations);
     }
 
+    //TODO: is not functional
     @GetMapping("/invited/{email}")
     public ResponseEntity getInvitationsForEmail(@PathVariable("email") String email) {
-        List<InvitationsDTO> invitations = invitationsService.getInvitationForEmail(email);
-        return ResponseEntity.ok(invitations);
+        return ResponseEntity.ok(invitationsService.getInvitationForEmail(email));
     }
 }

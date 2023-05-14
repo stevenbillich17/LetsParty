@@ -12,6 +12,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class InvitationsDTO {
+    private UUID id;
     private String invitedEmail;
     private UUID partyId;
     private int status;

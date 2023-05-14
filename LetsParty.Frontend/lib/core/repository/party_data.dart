@@ -3,6 +3,8 @@ import 'package:lets_party_frontend/core/models/party_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:lets_party_frontend/core/authentication/authenticator.dart';
 
+import '../models/invitations_model.dart';
+
 class PartyData {
   PartyData();
 
@@ -15,20 +17,36 @@ class PartyData {
   };
 
   Future<List<PartyModel>> getListOfHostedParties() async {
-    final response = await http.get(Uri.parse('$apiPath/parties/host/$_userEmail'), headers: _headers);
+    print(Authenticator.token);
+    final response = await http.get(
+        Uri.parse('$apiPath/parties/host/${Authenticator.email}'),
+        headers: _headers);
     if (response.statusCode == 200) {
       List<dynamic> data = json.decode(response.body);
       return data.map((json) => PartyModel.fromJson(json)).toList();
     } else {
+      print(response.statusCode);
       throw Exception('Failed to load data.');
     }
   }
 
   Future<List<PartyModel>> getListOfGoingParties() async {
-    final response = await http.get(Uri.parse('$apiPath/parties/invited/$_userEmail'), headers: _headers);
+    final response = await http.get(
+        Uri.parse('$apiPath/invitations/invited/${Authenticator.email}'),
+        headers: _headers);
     if (response.statusCode == 200) {
       List<dynamic> data = json.decode(response.body);
-      return data.map((json) => PartyModel.fromJson(json)).toList();
+
+      List<InvitationsModel> invitations =
+          data.map((json) => InvitationsModel.fromJson(json)).toList();
+
+      List<PartyModel> parties = [];
+
+      for(InvitationsModel invite in invitations) {
+        parties.add(await getParty(invite.partyId));
+      }
+
+      return parties;
     } else {
       throw Exception('Failed to load data.');
     }
@@ -45,7 +63,8 @@ class PartyData {
     }
   }
 
-  Future<void> createParty(String name, String description, DateTime rsvp, DateTime when, String location, List<String> tags) async {
+  Future<void> createParty(String name, String description, DateTime rsvp,
+      DateTime when, String location, List<String> tags) async {
     Map<String, dynamic> body = {
       'name': name,
       'description': description,
@@ -56,7 +75,8 @@ class PartyData {
       'hostEmail': _userEmail
     };
 
-    final response = await http.post(Uri.parse('$apiPath/parties'), headers: _headers, body: jsonEncode(body));
+    final response = await http.post(Uri.parse('$apiPath/parties'),
+        headers: _headers, body: jsonEncode(body));
 
     if (response.statusCode == 200) {
       print('Party created.');

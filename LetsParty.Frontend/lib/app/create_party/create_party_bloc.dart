@@ -57,12 +57,12 @@ class CreatePartyBloc extends ChangeNotifier {
   Future<void> createParty() async {
     if (rsvp != null && when != null) {
       _partyData.createParty(
-        name ?? 'Unnamed party',
+        name ?? 'SPER CA MERGE',
         description ?? 'No description',
         rsvp!,
         when!,
         where ?? 'No location',
-        tags != null ? tags!.split(',') : [],
+        tags != '' ? tags!.split(',') : [],
       );
     }
   }

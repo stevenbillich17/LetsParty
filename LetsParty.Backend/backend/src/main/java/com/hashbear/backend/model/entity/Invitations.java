@@ -17,8 +17,8 @@ import java.util.UUID;
 @Table(name = "invitations", schema = "public")
 public class Invitations {
     @Id
-    @GeneratedValue(generator = "increment")
-    private Long id;
+    @GeneratedValue(generator = "UUID")
+    private UUID id;
     private String invitedEmail;
     private UUID partyId;
     private int status;

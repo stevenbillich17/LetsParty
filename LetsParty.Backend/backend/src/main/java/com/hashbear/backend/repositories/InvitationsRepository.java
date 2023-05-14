@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface InvitationsRepository extends JpaRepository<Invitations, Long> {
+public interface InvitationsRepository extends JpaRepository<Invitations, UUID> {
     List<Invitations> findByPartyId(UUID partyId);
     List<Invitations> findByInvitedEmail(String email);
 }

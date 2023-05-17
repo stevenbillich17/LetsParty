@@ -3,7 +3,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lets_party_frontend/app/home/widgets/page_button.dart';
 import 'package:lets_party_frontend/assets/app_colors.dart';
-import 'package:lets_party_frontend/assets/app_dimens.dart';
 
 void main() {
   group('PageButton', () {

@@ -118,6 +118,23 @@ void main() {
       final textWidget = tester.widget<Text>(textFinder);
       expect(textWidget.style!.fontSize, 12.5);
     });
+
+    testWidgets('should display the correct text', (WidgetTester tester) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Material(
+            child: PageButton(
+              onPressed: onPressed,
+              svgAssetPath: svgAssetPath,
+              text: text,
+            ),
+          ),
+        ),
+      );
+
+      final textFinder = find.text(text);
+      expect(textFinder, findsOneWidget);
+    });
   });
 }
 

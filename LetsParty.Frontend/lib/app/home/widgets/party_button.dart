@@ -9,9 +9,12 @@ class PartyButton extends StatelessWidget {
     required this.name,
     required this.onPressed,
   });
-  final String image;
+
+  final Image? image;
   final String name;
   final VoidCallback onPressed;
+
+  // Image
 
   @override
   Widget build(BuildContext context) {
@@ -30,17 +33,14 @@ class PartyButton extends StatelessWidget {
                     SizedBox(
                       width: 200,
                       height: 130,
-                      child: Image.network(
-                        image,
-                        fit: BoxFit.cover,
-                        width: 200,
-                        height: 130,
-                        errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
-                          return Container(
-                            color: Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(0.5),
-                          );
-                        },
-                      ),
+                      child: image != null
+                          ? image
+                          : Container(
+                              color: Color(
+                                      (math.Random().nextDouble() * 0xFFFFFF)
+                                          .toInt())
+                                  .withOpacity(0.5),
+                            ),
                     ),
                   ],
                 ),

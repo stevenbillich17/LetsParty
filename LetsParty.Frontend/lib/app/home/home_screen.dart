@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lets_party_frontend/app/home/widgets/home_menu.dart';
 import 'package:lets_party_frontend/app/home/widgets/party_button.dart';
+import 'package:lets_party_frontend/app/party_hosted/party_invite_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:lets_party_frontend/assets/app_colors.dart';
 import 'package:lets_party_frontend/assets/app_dimens.dart';
@@ -81,12 +82,12 @@ class MyHomePage extends StatelessWidget {
                                   final PartyModel party =
                                       homeScreenBloc.goingParties[index];
                                   return PartyButton(
-                                    image: party.pictureLink,
+                                    image: homeScreenBloc.images[party.id],
                                     name: party.name,
                                     onPressed: () => Navigator.push (
                                       context,
                                       MaterialPageRoute (
-                                        builder: (BuildContext context) => PartyInviteScreen(party.id),
+                                        builder: (BuildContext context) => PartyInviteScreen(party.id, homeScreenBloc.images[party.id]),
                                       ),
                                     ),
                                   );
@@ -117,9 +118,14 @@ class MyHomePage extends StatelessWidget {
                                   final PartyModel party =
                                       homeScreenBloc.hostedParties[index];
                                   return PartyButton(
-                                    image: party.pictureLink,
+                                    image: homeScreenBloc.images[party.id],
                                     name: party.name,
-                                    onPressed: () {},
+                                    onPressed: () => Navigator.push (
+                                      context,
+                                      MaterialPageRoute (
+                                        builder: (BuildContext context) => PartyHostedScreen(party.id, homeScreenBloc.images[party.id]),
+                                      ),
+                                    )
                                   );
                                 },
                               ),

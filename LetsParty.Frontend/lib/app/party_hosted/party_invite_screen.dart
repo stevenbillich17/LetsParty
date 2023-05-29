@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lets_party_frontend/app/items_page/items_page_screen.dart';
+import 'package:lets_party_frontend/app/party_hosted/party_invite_bloc.dart';
 import 'package:lets_party_frontend/app/party_invite/party_invite_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:lets_party_frontend/assets/app_colors.dart';
@@ -8,16 +9,17 @@ import 'package:lets_party_frontend/assets/app_styles.dart';
 import 'package:lets_party_frontend/app/components/party_description.dart';
 import 'dart:math' as math;
 
-class PartyInviteScreen extends StatelessWidget {
-  PartyInviteScreen(this.partyID, this.image, {super.key});
+class PartyHostedScreen extends StatelessWidget {
+  PartyHostedScreen(this.partyID, this.image, {super.key});
 
   String partyID;
   Image? image;
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => PartyInviteBloc(partyID),
-      child: Consumer<PartyInviteBloc>(
+      create: (context) => PartyHostedBloc(partyID),
+      child: Consumer<PartyHostedBloc>(
         builder: (context, bloc, child) {
           if (bloc.loadingDone) {
             return Scaffold(
@@ -99,35 +101,6 @@ class PartyInviteScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          ElevatedButton(
-                            onPressed: () {},
-                            child: Text('Accept'),
-                            style: ButtonStyle(
-                              fixedSize: MaterialStateProperty.all(
-                                Size(
-                                  MediaQuery.of(context).size.width / 2 - 50,
-                                  40.0,
-                                ),
-                              ),
-                            ),
-                          ),
-                          ElevatedButton(
-                            onPressed: () {},
-                            child: Text('Decline'),
-                            style: ButtonStyle(
-                              fixedSize: MaterialStateProperty.all(
-                                Size(
-                                  MediaQuery.of(context).size.width / 2 - 50,
-                                  40.0,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
                       ),
                     ],
                   ),

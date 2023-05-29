@@ -8,7 +8,7 @@ void main() {
       final widget = MaterialApp(
         home: Material(
           child: PartyButton(
-            image: 'https://example.com/image.jpg',
+            imageId: 'https://example.com/image.jpg',
             name: 'Party Name',
             onPressed: () {},
           ),
@@ -29,7 +29,7 @@ void main() {
       final widget = MaterialApp(
         home: Material(
           child: PartyButton(
-            image: 'https://example.com/image.jpg',
+            imageId: 'https://example.com/image.jpg',
             name: 'Party Name',
             onPressed: () {
               pressed = true;
@@ -52,7 +52,7 @@ void main() {
       final widget = MaterialApp(
         home: Material(
           child: PartyButton(
-            image: 'invalid_image_url',
+            imageId: 'invalid_image_url',
             name: 'Party Name',
             onPressed: () {},
           ),
@@ -69,7 +69,7 @@ void main() {
       final widget = MaterialApp(
         home: Material(
           child: PartyButton(
-            image: 'https://example.com/image.jpg',
+            imageId: 'https://example.com/image.jpg',
             name: 'Party Name',
             onPressed: () {},
           ),

@@ -42,7 +42,7 @@ class PartyData {
 
       List<PartyModel> parties = [];
 
-      for(InvitationsModel invite in invitations) {
+      for (InvitationsModel invite in invitations) {
         parties.add(await getParty(invite.partyId));
       }
 

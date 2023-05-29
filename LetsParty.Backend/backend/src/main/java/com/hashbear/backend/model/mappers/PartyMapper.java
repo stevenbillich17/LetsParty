@@ -2,14 +2,18 @@ package com.hashbear.backend.model.mappers;
 
 import com.hashbear.backend.model.dtos.PartyDTO;
 import com.hashbear.backend.model.entity.Party;
-import lombok.RequiredArgsConstructor;
-import org.mapstruct.Mapper;
+import com.hashbear.backend.services.FileService;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 
-@Mapper(componentModel = "spring")
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class PartyMapper {
-//    @Autowired
-//    final private FileService fileService;
+
+    @Autowired
+    private FileService fileService;
+
     public Party partyDTOToParty(PartyDTO partyDTO) {
         StringBuilder tags = new StringBuilder();
 
@@ -26,7 +30,7 @@ public class PartyMapper {
                 .location(partyDTO.getLocation())
                 .tags(tags.toString())
                 .hostEmail(partyDTO.getHostEmail())
-//                .image(fileService.getFile(partyDTO.getImage()).orElse(null))
+                .image(fileService.getFile(partyDTO.getImage()).orElse(null))
                 .build();
     }
 
@@ -42,7 +46,7 @@ public class PartyMapper {
                 .location(party.getLocation())
                 .tags(tags)
                 .hostEmail(party.getHostEmail())
-//                .image(party.getImage().getId())
+                .image(party.getImage() != null ? party.getImage().getId() : null)
                 .build();
     }
 }

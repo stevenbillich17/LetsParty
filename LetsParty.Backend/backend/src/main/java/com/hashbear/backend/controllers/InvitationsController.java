@@ -33,4 +33,19 @@ public class InvitationsController {
     public ResponseEntity getInvitationsForEmail(@PathVariable("email") String email) {
         return ResponseEntity.ok(invitationsService.getInvitationForEmail(email));
     }
+
+    @PostMapping("/accept/{partyId}/{email}")
+    public ResponseEntity acceptInvitation(@PathVariable("partyId") UUID partyId, @PathVariable("email") String email) {
+        return ResponseEntity.ok(invitationsService.acceptInvitation(partyId, email));
+    }
+
+    @PostMapping("/decline/{partyId}/{email}")
+    public ResponseEntity declineInvitation(@PathVariable("partyId") UUID partyId, @PathVariable("email") String email) {
+        return ResponseEntity.ok(invitationsService.declineInvitation(partyId, email));
+    }
+
+    @GetMapping("/status/{partyId}/{email}")
+    public ResponseEntity<Integer> getInvitationStatus(@PathVariable("partyId") UUID partyId, @PathVariable("email") String email) {
+        return ResponseEntity.ok(invitationsService.getInvitationStatus(partyId, email));
+    }
 }

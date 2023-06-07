@@ -14,7 +14,7 @@ import java.util.UUID;
 public class PartyService {
     @Autowired
     private final PartyRepository partyRepository;
-    private final PartyMapper partyMapper = new PartyMapper();
+    final PartyMapper partyMapper;
 
     public PartyDTO createParty(PartyDTO party) {
         return partyMapper.partyToPartyDTO(partyRepository.save(partyMapper.partyDTOToParty(party)));

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lets_party_frontend/app/items_page/items_page_screen.dart';
 import 'package:lets_party_frontend/app/party_invite/party_invite_bloc.dart';
+import 'package:lets_party_frontend/core/authentication/authenticator.dart';
+import 'package:lets_party_frontend/core/repository/invitations_data.dart';
 import 'package:provider/provider.dart';
 import 'package:lets_party_frontend/assets/app_colors.dart';
 import 'package:lets_party_frontend/assets/app_dimens.dart';
@@ -9,9 +11,10 @@ import 'package:lets_party_frontend/app/components/party_description.dart';
 import 'dart:math' as math;
 
 class PartyInviteScreen extends StatelessWidget {
-  PartyInviteScreen(this.partyID, {super.key});
+  PartyInviteScreen(this.partyID, this.image, {super.key});
 
   String partyID;
+  Image? image;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +29,9 @@ class PartyInviteScreen extends StatelessWidget {
                   bloc.party!.name,
                   style: AppStyles.appBarStyle,
                 ),
-                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                backgroundColor: Theme
+                    .of(context)
+                    .scaffoldBackgroundColor,
                 leading: TextButton(
                   onPressed: () => Navigator.pop(context),
                   child: const Text(
@@ -44,7 +49,7 @@ class PartyInviteScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(AppDimens.padding_2x),
                   child: ListView(
                     children: [
-                      PartyDescription(bloc.party!, bloc.hostName!),
+                      PartyDescription(bloc.party!, bloc.hostName!, image),
                       const SizedBox(
                         height: AppDimens.padding_4x,
                       ),
@@ -75,14 +80,18 @@ class PartyInviteScreen extends StatelessWidget {
                                           height: 70,
                                           decoration: BoxDecoration(
                                             shape: BoxShape.circle,
-                                            color: Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(0.3),
+                                            color: Color((math.Random()
+                                                .nextDouble() *
+                                                0xFFFFFF)
+                                                .toInt())
+                                                .withOpacity(0.3),
                                           ),
                                         ),
                                         SizedBox(
                                           height: 10.0,
                                         ),
                                         Text(
-                                          bloc.partyGuests[count].invitedEmail,
+                                          bloc.names[bloc.partyGuests[count].invitedEmail] ?? "",
                                           softWrap: true,
                                           maxLines: null,
                                           textAlign: TextAlign.center,
@@ -96,25 +105,63 @@ class PartyInviteScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      /*ElevatedButton(
-                        style: ButtonStyle(
-                          fixedSize: MaterialStateProperty.all(
-                            const Size(double.infinity, 50.0),
-                          ),
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const ItemsPage(),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Visibility(
+                            visible: bloc.currentStatus != 0,
+                            child: Text(
+                              bloc.currentStatus == -1
+                                  ? 'You declined this invitation'
+                                  : 'You have already accepted this invitation',
+                              style: AppStyles.bodyStyle,
+                              textAlign: TextAlign.center,
                             ),
-                          );
-                        },
-                        child: const Text(
-                          'What is needed',
-                          style: AppStyles.bodyStyle,
-                        ),
-                      )*/
+                          ),
+                          Visibility(
+                            visible: bloc.currentStatus == 0,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () async =>
+                                      bloc.acceptInvitation(
+                                          bloc.party!.id, Authenticator.email),
+                                  child: Text('Accept'),
+                                  style: ButtonStyle(
+                                    fixedSize: MaterialStateProperty.all(
+                                      Size(
+                                        MediaQuery
+                                            .of(context)
+                                            .size
+                                            .width / 2 - 50,
+                                        40.0,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () async =>
+                                      bloc.declineInvitation(
+                                          bloc.party!.id, Authenticator.email),
+                                  child: Text('Decline'),
+                                  style: ButtonStyle(
+                                    fixedSize: MaterialStateProperty.all(
+                                      Size(
+                                        MediaQuery
+                                            .of(context)
+                                            .size
+                                            .width / 2 - 50,
+                                        40.0,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),

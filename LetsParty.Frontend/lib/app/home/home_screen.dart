@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lets_party_frontend/app/home/widgets/home_menu.dart';
 import 'package:lets_party_frontend/app/home/widgets/party_button.dart';
+import 'package:lets_party_frontend/app/party_hosted/party_hosted_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:lets_party_frontend/assets/app_colors.dart';
 import 'package:lets_party_frontend/assets/app_dimens.dart';
@@ -16,28 +17,38 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => HomeScreenBloc(),
-      child: SafeArea(
-        child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-            elevation: 0.0,
-            leadingWidth: 100.0,
-            toolbarHeight: 70.0,
-            title: const Text(
-              "let's party!",
-              style: TextStyle(
-                color: appBlack,
-                fontSize: 42.0,
-                fontFamily: FontFamily.keepOnTruckin,
-              ),
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          elevation: 0.0,
+          leadingWidth: 100.0,
+          toolbarHeight: 70.0,
+          title: const Text(
+            "let's party!",
+            style: TextStyle(
+              color: appBlack,
+              fontSize: 42.0,
+              fontFamily: FontFamily.keepOnTruckin,
             ),
-            centerTitle: true,
           ),
-          body: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppDimens.padding_2x,
-              vertical: AppDimens.padding_2x,
-            ),
+          centerTitle: true,
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppDimens.padding_2x,
+            vertical: AppDimens.padding_2x,
+          ),
+          child: RefreshIndicator(
+            onRefresh: () async {
+              return Future<void>.value().then((_) {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => MyHomePage(),
+                  ),
+                );
+              });
+            },
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,12 +92,16 @@ class MyHomePage extends StatelessWidget {
                                   final PartyModel party =
                                       homeScreenBloc.goingParties[index];
                                   return PartyButton(
-                                    image: party.pictureLink,
+                                    image: homeScreenBloc.images[party.id],
                                     name: party.name,
-                                    onPressed: () => Navigator.push (
+                                    onPressed: () => Navigator.push(
                                       context,
-                                      MaterialPageRoute (
-                                        builder: (BuildContext context) => PartyInviteScreen(party.id),
+                                      MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            PartyInviteScreen(
+                                          party.id,
+                                          homeScreenBloc.images[party.id],
+                                        ),
                                       ),
                                     ),
                                   );
@@ -111,15 +126,27 @@ class MyHomePage extends StatelessWidget {
                             SizedBox(
                               height: 175,
                               child: ListView.builder(
-                                itemCount: homeScreenBloc.hostedParties.length,
+                                itemCount:
+                                    homeScreenBloc.hostedParties.length,
                                 scrollDirection: Axis.horizontal,
                                 itemBuilder: (context, index) {
                                   final PartyModel party =
                                       homeScreenBloc.hostedParties[index];
                                   return PartyButton(
-                                    image: party.pictureLink,
+                                    image: homeScreenBloc.images[party.id],
                                     name: party.name,
-                                    onPressed: () {},
+                                    onPressed: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (
+                                          BuildContext context,
+                                        ) =>
+                                            PartyHostedScreen(
+                                          party.id,
+                                          homeScreenBloc.images[party.id],
+                                        ),
+                                      ),
+                                    ),
                                   );
                                 },
                               ),

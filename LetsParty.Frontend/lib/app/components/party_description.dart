@@ -5,32 +5,35 @@ import 'package:lets_party_frontend/assets/app_styles.dart';
 import 'package:lets_party_frontend/core/models/party_model.dart';
 
 class PartyDescription extends StatelessWidget with StringMixins {
-  PartyDescription(this.party, this.hostName, {super.key});
+  PartyDescription(this.party, this.hostName, this.image, {super.key});
 
   PartyModel party;
   String hostName;
+  Image? image;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(AppDimens.roundedCorners),
+        SizedBox(
           child: SizedBox(
+            width: MediaQuery.of(context).size.width * 0.9,
             height: 200,
-            width: double.infinity,
-            child: Image.network(
-              party.pictureLink,
-              fit: BoxFit.cover,
-              errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
-                return Container(
-                  color: Colors.grey[200],
-                );
-              },
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20.0),
+              clipBehavior: Clip.antiAlias,
+              child: image != null
+                  ? Ink.image(
+                      image:
+                          image!.image, // Replace with your image path or URL
+                      height: 160, // Desired height
+                      fit: BoxFit
+                          .cover, // Adjust the fit property based on your requirements
+                    )
+                  : Container(color: Colors.grey[300]),
             ),
           ),
-
         ),
         const SizedBox(
           height: AppDimens.padding_2x,

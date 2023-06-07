@@ -3,21 +3,21 @@ class PartyModel {
     return PartyModel(
       name: json['name'],
       description: json['description'],
-      //TODO
-      pictureLink: '',
+      imageId: json['image'] ?? '',
       hostEmail: json['hostEmail'] ?? '',
       rsvp: DateTime.parse(json['rsvp']),
       when: DateTime.parse(json['when']),
       where: json['location'] ?? '',
       tags: List.castFrom(json['tags']),
       id: json['id'],
+
     );
   }
 
   PartyModel({
     required this.description,
     required this.name,
-    required this.pictureLink,
+    required this.imageId,
     required this.hostEmail,
     required this.rsvp,
     required this.when,
@@ -28,7 +28,7 @@ class PartyModel {
 
   String description;
   String name;
-  String pictureLink;
+  String imageId;
   String hostEmail;
   DateTime rsvp;
   DateTime when;
@@ -38,6 +38,6 @@ class PartyModel {
 
   @override
   String toString() {
-    return 'PartyModel{description: $description, name: $name, pictureLink: $pictureLink, hostEmail: $hostEmail, rsvp: $rsvp, when: $when, where: $where, id: $id, tags: $tags}';
+    return 'PartyModel{description: $description, name: $name, pictureLink: $imageId, hostEmail: $hostEmail, rsvp: $rsvp, when: $when, where: $where, id: $id, tags: $tags}';
   }
 }

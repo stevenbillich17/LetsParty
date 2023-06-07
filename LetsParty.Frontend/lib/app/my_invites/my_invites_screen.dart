@@ -82,7 +82,7 @@ class MyInvites extends StatelessWidget with StringMixins {
                               onPressed: () => Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => PartyInviteScreen(bloc.invitedParties[index].id),
+                                  builder: (context) => PartyInviteScreen(bloc.invitedParties[index].id, bloc.images[party.id]),
                                 ),
                               ),
                             );

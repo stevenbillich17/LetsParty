@@ -1,6 +1,7 @@
 package com.hashbear.backend.services;
 
 import com.hashbear.backend.model.dtos.InvitationsDTO;
+import com.hashbear.backend.model.entity.Invitations;
 import com.hashbear.backend.model.mappers.InvitationsMapper;
 import com.hashbear.backend.repositories.InvitationsRepository;
 import lombok.AllArgsConstructor;
@@ -25,5 +26,24 @@ public class InvitationsService {
 
     public List<InvitationsDTO> getInvitationForEmail(String email) {
         return invitationsRepository.findByInvitedEmail(email).stream().map(invitationsMapper::invitationsToInvitationsDTO).toList();
+    }
+
+    public UUID acceptInvitation(UUID partyId, String email) {
+        Invitations invitation = invitationsRepository.findByPartyIdAndInvitedEmail(partyId, email);
+        invitation.setStatus(1);
+        invitationsRepository.save(invitation);
+        return partyId;
+    }
+
+    public UUID declineInvitation(UUID partyId, String email) {
+        Invitations invitation = invitationsRepository.findByPartyIdAndInvitedEmail(partyId, email);
+        invitation.setStatus(-1);
+        invitationsRepository.save(invitation);
+        return partyId;
+    }
+
+    public int getInvitationStatus(UUID partyId, String email) {
+        Invitations invitation = invitationsRepository.findByPartyIdAndInvitedEmail(partyId, email);
+        return invitation.getStatus();
     }
 }

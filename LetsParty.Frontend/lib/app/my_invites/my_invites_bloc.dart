@@ -5,7 +5,7 @@ import 'package:lets_party_frontend/core/repository/invitations_data.dart';
 import 'package:lets_party_frontend/core/repository/party_data.dart';
 import 'package:lets_party_frontend/core/models/party_model.dart';
 
-import '../../core/repository/image_data.dart';
+import 'package:lets_party_frontend/core/repository/image_data.dart';
 
 class MyInvitesBloc extends ChangeNotifier {
   MyInvitesBloc() {
@@ -21,9 +21,12 @@ class MyInvitesBloc extends ChangeNotifier {
   final ImageData _imageData = ImageData();
 
   Future<void> loadScreen() async {
-    invitations = await _invitationsData.getListOfInvitationsForUser(Authenticator.email);
+    invitations =
+        await _invitationsData.getListOfInvitationsForUser(Authenticator.email);
 
-    for(int i = 0; i < invitations.length; i++){
+    invitations.removeWhere((element) => element.status != 0);
+
+    for (int i = 0; i < invitations.length; i++) {
       invitedParties.add(await _partyData.getParty(invitations[i].partyId));
     }
 

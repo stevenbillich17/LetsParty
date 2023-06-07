@@ -30,7 +30,7 @@ public class PartyMapper {
                 .location(partyDTO.getLocation())
                 .tags(tags.toString())
                 .hostEmail(partyDTO.getHostEmail())
-                .image(fileService.getFile(partyDTO.getImage()).orElse(null))
+                .image(partyDTO.getImage() != null ? fileService.getFile(partyDTO.getImage()).get() : null)
                 .build();
     }
 

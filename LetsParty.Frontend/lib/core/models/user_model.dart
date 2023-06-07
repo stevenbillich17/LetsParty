@@ -1,5 +1,4 @@
 class UserModel {
-
   UserModel.allFields({required this.name, this.email, this.birthday});
 
   UserModel(this.name, this.birthday);
@@ -10,10 +9,9 @@ class UserModel {
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel.allFields(
-      name :json['name'],
+      name: json['name'],
       email: json['email'],
-      birthday: json['birthday'],
+      birthday: json['birthday'] ?? "",
     );
   }
-
 }

@@ -11,4 +11,5 @@ import java.util.UUID;
 public interface InvitationsRepository extends JpaRepository<Invitations, UUID> {
     List<Invitations> findByPartyId(UUID partyId);
     List<Invitations> findByInvitedEmail(String email);
+    Invitations findByPartyIdAndInvitedEmail(UUID partyId, String email);
 }
